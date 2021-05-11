@@ -62,6 +62,9 @@ public class Course {
 
     @Override
     public String toString() {
-        return name + " " + month + " " + weeksDuration;
+        String[] months = { "January", "February", "March", "April", "May", "June", "July",
+                "August", "September", "October", "November", "December" };
+
+        return name + " " + months[month-1].toUpperCase() + " Duration: " + weeksDuration;
     }
 }

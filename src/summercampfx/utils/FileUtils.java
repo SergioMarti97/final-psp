@@ -26,7 +26,7 @@ public class FileUtils {
     public static List<PendingApp> loadApps() {
         ArrayList<PendingApp> pendingApps = new ArrayList<>();
         try {
-            FileReader fr = new FileReader("C:\\Users\\Sergio\\IdeaProjects\\PSP-SUBJECT\\psp-ud1-finalexercise\\pendingApps.txt");
+            FileReader fr = new FileReader(System.getProperty("user.dir") + File.separator + "pendingApps.txt");
             BufferedReader br = new BufferedReader(fr);
 
             String line = br.readLine();
@@ -65,7 +65,7 @@ public class FileUtils {
     public static List<Course> loadCourses() {
         ArrayList<Course> courses = new ArrayList<>();
         try {
-            FileReader fr = new FileReader("C:\\Users\\Sergio\\IdeaProjects\\psp-ud1-finalexercise\\courses.txt");
+            FileReader fr = new FileReader(System.getProperty("user.dir") + File.separator + "courses.txt");
             BufferedReader br = new BufferedReader(fr);
 
             String line = br.readLine();
@@ -99,8 +99,7 @@ public class FileUtils {
      */
     public static void saveApps() {
         try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter("C:\\Users\\Sergio\\IdeaProjects\\psp-ud1-finalexercise\\courses.txt"));
-
+            BufferedWriter bw = new BufferedWriter(new FileWriter(System.getProperty("user.dir") + File.separator + "courses.txt"));
         } catch ( IOException e ) {
             e.printStackTrace();
         }
@@ -112,7 +111,7 @@ public class FileUtils {
      */
     public static void saveApp(String line) {
         try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter("C:\\Users\\Sergio\\IdeaProjects\\psp-ud1-finalexercise\\pendingApps.txt"));
+            BufferedWriter bw = new BufferedWriter(new FileWriter(System.getProperty("user.dir") + File.separator + "pendingApps.txt"));
             bw.write(line);
         } catch ( IOException e ) {
             e.printStackTrace();
@@ -125,7 +124,7 @@ public class FileUtils {
      */
     public static void saveCourse(String line) {
         try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter("C:\\Users\\Sergio\\IdeaProjects\\psp-ud1-finalexercise\\courses.txt"));
+            BufferedWriter bw = new BufferedWriter(new FileWriter(System.getProperty("user.dir") + File.separator + "courses.txt"));
             bw.write(line);
         } catch ( IOException e ) {
             e.printStackTrace();

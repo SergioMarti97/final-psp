@@ -1,5 +1,7 @@
 package summercampfx.utils;
 
+import javafx.scene.control.Alert;
+
 /**
  * This class is needed for show the different
  * Alert messages
@@ -16,7 +18,11 @@ public class MessageUtils {
      * @param message the text of the message
      */
     public static void showError(String header, String message) {
-
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText(header);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 
     /**
@@ -25,7 +31,11 @@ public class MessageUtils {
      * @param message the text of the message
      */
     public static void showMessage(String header, String message) {
-
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Information");
+        alert.setHeaderText(header);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 
 }
