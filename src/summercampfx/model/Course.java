@@ -62,8 +62,13 @@ public class Course {
         this.weeksDuration = weeksDuration;
     }
 
+    public String getLine() {
+        return name + ';' + month + ';' + weeksDuration;
+    }
+
     @Override
     public String toString() {
         return name + " " + Month.values()[month-1] + " Duration: " + weeksDuration + " weeks";
     }
+
 }

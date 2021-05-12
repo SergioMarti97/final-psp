@@ -82,21 +82,43 @@ public class MainViewController {
     }
 
     public void handleNewCourse() throws Exception {
-        openWindow("New course", "views/NewCourseView.fxml");
+        boolean saveData = openWindow("New course", "views/NewCourseView.fxml");
+        if (saveData) {
+            comboCourses.getItems().clear();
+            setCourses();
+        }
     }
 
     public void handleNewApplication() throws Exception {
-        openWindow("New Application", "views/NewApplicationView.fxml");
+        boolean saveData = openWindow("New Application", "views/NewApplicationView.fxml");
+        if (saveData) {
+            studentsTableView.getItems().clear();
+            studentsTableView.setItems(FXCollections.observableArrayList(FileUtils.loadApps()));
+        }
     }
 
-    private void openWindow(String title, String location) throws Exception {
+    private boolean openWindow(String title, String location) throws Exception {
         Stage stage = new Stage();
         stage.setTitle(title);
-        Parent root = FXMLLoader.load(getClass().getResource("../" + location));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../" + location));
+        Parent root = loader.load();
+
+        if (title.equals("New Application")) {
+            NewApplicationViewController controller = loader.getController();
+            showWindowStage(stage, root);
+            return controller.isSaveData();
+        }
+
+        NewCourseViewController controller = loader.getController();
+        showWindowStage(stage, root);
+        return controller.isSaveData();
+    }
+
+    private void showWindowStage(Stage stage, Parent root) {
         stage.setScene(new Scene(root));
         stage.initModality(Modality.WINDOW_MODAL);
         stage.initOwner(mainStage);
-        stage.show();
+        stage.showAndWait();
     }
 
     public void setMainStage(Stage mainStage) {

@@ -2,16 +2,20 @@ package summercampfx.controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import summercampfx.model.PendingApp;
 import summercampfx.utils.FileUtils;
 import summercampfx.utils.MessageUtils;
 import summercampfx.utils.Month;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -35,7 +39,9 @@ public class NewApplicationViewController {
     @FXML
     private TextField fieldCourse;
 
-    public void handleSave() {
+    private boolean saveData;
+
+    public void handleSave(ActionEvent actionEvent) {
         String name = fieldName.getText();
         String surnames = fieldSurnames.getText();
         LocalDate birthDate = datePickerBirthday.getValue();
@@ -63,8 +69,14 @@ public class NewApplicationViewController {
             return;
         }
         PendingApp pendingApp = new PendingApp(name, surnames, birthDate, course, month, weekDuration);
-        FileUtils.saveApp(pendingApp.getLine());
-        System.out.println("OK");
+        try {
+            FileUtils.saveApp(pendingApp.getLine());
+            MessageUtils.showMessage("Application Save", "The application has been saved successfully");
+            saveData = true;
+            ((Stage)((Node)(actionEvent.getSource())).getScene().getWindow()).close();
+        } catch (IOException e) {
+            MessageUtils.showError("Save failed", e.getMessage());
+        }
     }
 
     private void setComboWeeks(int startWeek, int endWeek) {
@@ -98,8 +110,13 @@ public class NewApplicationViewController {
         });
     }
 
+    public boolean isSaveData() {
+        return this.saveData;
+    }
+
     @FXML
     public void initialize() {
+        saveData = false;
         comboBoxMonths.setItems(FXCollections.observableArrayList(Month.values()));
         setComboWeeks(1, 12);
         setDatePickerBirthdayFormat();

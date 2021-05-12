@@ -112,7 +112,7 @@ public class PendingApp {
     }
 
     public String getLine() {
-        return name + ";" + surnames + ";" + birthDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + ";" + course + ";" + month + ";" + weekDuration;
+        return name + ";" + surnames + ";" + birthDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + ";" + course + ";" + month.getValue() + ";" + weekDuration;
     }
 
     @Override
