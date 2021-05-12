@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import summercampfx.controller.MainViewController;
 
 /**
  * This class is the summer camp
@@ -13,13 +14,17 @@ import javafx.stage.Stage;
  * @author Sergio Martí Torregrosa
  * @date 26/10/2020
  */
-public class SummerCampFX extends Application {
+public class App extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("FXMLMainView.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("views/MainView.fxml"));
+        Parent root = loader.load();
+        MainViewController controller = loader.getController();
         stage.setTitle("Summer camp FX");
-        stage.setScene(new Scene(root));
+        stage.setScene(new Scene(root, 650, 400));
+        stage.setResizable(false);
+        controller.setMainStage(stage);
         stage.show();
     }
 
