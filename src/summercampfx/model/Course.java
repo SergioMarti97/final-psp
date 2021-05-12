@@ -1,5 +1,7 @@
 package summercampfx.model;
 
+import summercampfx.utils.Month;
+
 /**
  * This class is for the Course of the summer camp
  *
@@ -62,9 +64,6 @@ public class Course {
 
     @Override
     public String toString() {
-        String[] months = { "January", "February", "March", "April", "May", "June", "July",
-                "August", "September", "October", "November", "December" };
-
-        return name + " " + months[month-1].toUpperCase() + " Duration: " + weeksDuration;
+        return name + " " + Month.values()[month-1] + " Duration: " + weeksDuration + " weeks";
     }
 }

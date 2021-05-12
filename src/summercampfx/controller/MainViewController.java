@@ -4,7 +4,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
@@ -17,10 +16,7 @@ import summercampfx.model.Course;
 import summercampfx.model.PendingApp;
 import summercampfx.utils.FileUtils;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
-public class MainViewController implements Initializable {
+public class MainViewController {
 
     @FXML
     public TableView<PendingApp> studentsTableView;
@@ -75,8 +71,8 @@ public class MainViewController implements Initializable {
         nameCol2.setCellValueFactory(new PropertyValueFactory<>("surnames"));
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    @FXML
+    public void initialize() {
         // studentsTableView;
         setColumnsFirstTable();
         setColumnsSecondTable();

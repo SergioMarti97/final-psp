@@ -1,7 +1,9 @@
 package summercampfx.model;
 
 import java.time.LocalDate;
-import java.time.Month;
+import java.time.format.DateTimeFormatter;
+
+import summercampfx.utils.Month;
 
 /**
  * This class is for the student
@@ -107,6 +109,10 @@ public class PendingApp {
 
     public void setWeekDuration(int weekDuration) {
         this.weekDuration = weekDuration;
+    }
+
+    public String getLine() {
+        return name + ";" + surnames + ";" + birthDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + ";" + course + ";" + month + ";" + weekDuration;
     }
 
     @Override
