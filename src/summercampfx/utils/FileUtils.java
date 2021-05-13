@@ -4,12 +4,9 @@ import summercampfx.model.Course;
 import summercampfx.model.PendingApp;
 
 import java.io.*;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Path;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 /**
  * This class is needed for save and write the information
@@ -99,6 +96,28 @@ public class FileUtils {
         return courses;
     }
 
+    public static List<String> loadCabinsFileNames() {
+        File folder = new File(System.getProperty("user.dir") + File.separator + "cabin");
+        File[] listOfFiles = folder.listFiles();
+        List<String> listOfFilesName = new ArrayList<>();
+
+        if (folder.mkdir()) {
+            return listOfFilesName;
+        }
+
+        if (listOfFiles == null) {
+            return listOfFilesName;
+        }
+
+        for (File listOfFile : listOfFiles) {
+            if (listOfFile.isFile()) {
+                listOfFilesName.add(listOfFile.getName());
+            }
+        }
+
+        return listOfFilesName;
+    }
+
     /**
      * This method saves the pending applications not processed again in the text file
      * before exiting the program
@@ -139,9 +158,16 @@ public class FileUtils {
      * This method saves the students assigned to a cabin in the file
      * "./cabins/" + situation + ".txt"
      * @param situation the situation of the cabin
+     * @param students the students
      */
-    public static void saveCabin(String situation) {
-
+    public static void saveCabin(String situation, List<PendingApp> students) throws IOException {
+        String fileName = System.getProperty("user.dir") + File.separator + "cabin" + File.separator + situation + ".txt";
+        BufferedWriter bw = new BufferedWriter(new FileWriter(fileName, true));
+        for (PendingApp student : students) {
+            bw.write(student.getLine());
+            bw.newLine();
+        }
+        bw.close();
     }
 
 }

@@ -22,7 +22,7 @@ public class App extends Application {
         Parent root = loader.load();
         MainViewController controller = loader.getController();
         stage.setTitle("Summer camp FX");
-        stage.setScene(new Scene(root, 650, 400));
+        stage.setScene(new Scene(root, 670, 400));
         stage.setResizable(false);
         controller.setMainStage(stage);
         stage.show();

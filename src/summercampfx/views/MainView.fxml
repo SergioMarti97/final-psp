@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="summercampfx.controller.MainViewController">
+<AnchorPane prefHeight="400.0" prefWidth="670.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="summercampfx.controller.MainViewController">
    <children>
       <GridPane prefHeight="400.0" prefWidth="600.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="0.0">
         <columnConstraints>
@@ -47,7 +47,7 @@
                         <ComboBox fx:id="comboCourses" prefHeight="26.0" prefWidth="258.0" />
                      </children>
                   </VBox>
-                  <VBox prefHeight="55.0" prefWidth="193.0">
+                  <VBox prefHeight="55.0" prefWidth="200.0">
                      <children>
                         <Label text="Age">
                            <font>
@@ -62,7 +62,7 @@
                            <font>
                               <Font size="14.0" />
                            </font></Label>
-                        <TextField prefHeight="27.0" prefWidth="93.0" />
+                        <TextField fx:id="cabinTextField" prefHeight="27.0" prefWidth="93.0" />
                      </children>
                      <HBox.margin>
                         <Insets bottom="10.0" />
@@ -74,28 +74,28 @@
                <children>
                   <HBox prefHeight="262.0" prefWidth="600.0">
                      <children>
-                        <TableView id="studentsTableView" fx:id="studentsTableView" prefHeight="230.0" prefWidth="384.0">
+                        <TableView id="studentsTableView" fx:id="studentsTableView" prefHeight="230.0" prefWidth="386.0">
                           <columns>
                             <TableColumn fx:id="nameCol" prefWidth="75.0" text="NAME" />
                             <TableColumn fx:id="surnamesCol" prefWidth="174.4000244140625" text="SURNAMES" />
                               <TableColumn fx:id="birthDateCol" prefWidth="101.59996032714844" text="BIRTHDATE" />
                           </columns>
                         </TableView>
-                        <VBox prefHeight="230.0" prefWidth="137.0">
+                        <VBox prefHeight="230.0" prefWidth="142.0">
                            <children>
                               <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="26.0" prefWidth="106.0" text="Full cabins">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
                               </Label>
-                              <ListView prefHeight="168.0" prefWidth="106.0" />
-                              <Button alignment="CENTER" mnemonicParsing="false" text="Fill Cabin &gt;&gt;">
+                              <ListView fx:id="listCabins" prefHeight="168.0" prefWidth="99.0" />
+                              <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleFillCabin" text="Fill Cabin &gt;&gt;">
                                  <VBox.margin>
-                                    <Insets left="4.0" top="10.0" />
+                                    <Insets left="8.0" top="10.0" />
                                  </VBox.margin></Button>
                            </children>
                         </VBox>
-                        <TableView prefHeight="230.0" prefWidth="183.0">
+                        <TableView fx:id="cabinTableView" prefHeight="230.0" prefWidth="189.0">
                           <columns>
                             <TableColumn fx:id="nameCol2" prefWidth="75.0" text="Name" />
                             <TableColumn fx:id="surnamesCol2" prefWidth="81.0" text="Surnames" />
@@ -107,9 +107,9 @@
                      <children>
                         <Button mnemonicParsing="false" onAction="#handleNewCourse" text="New Course" />
                         <Button mnemonicParsing="false" onAction="#handleNewApplication" text="New Application" />
-                        <Button mnemonicParsing="false" prefHeight="27.0" prefWidth="100.0" text="Save Cabin">
+                        <Button mnemonicParsing="false" onAction="#handleSaveCabin" prefHeight="27.0" prefWidth="100.0" text="Save Cabin">
                            <HBox.margin>
-                              <Insets left="240.0" />
+                              <Insets left="260.0" />
                            </HBox.margin></Button>
                      </children>
                      <VBox.margin>
