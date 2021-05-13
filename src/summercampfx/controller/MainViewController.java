@@ -115,7 +115,15 @@ public class MainViewController {
         }
 
         try {
-            FileUtils.saveCabin(cabin, students);
+            FileUtils.saveCabin(cabin, students, 10);
+            listCabins.getItems().clear();
+            listCabins.getItems().addAll(FileUtils.loadCabinsFileNames());
+
+            if (students.size() > 10) {
+                MessageUtils.showMessage("Cabin Save", "The cabin has been saved successfully the first 10 students");
+                return;
+            }
+
             MessageUtils.showMessage("Cabin Save", "The cabin has been saved successfully");
         } catch (IOException e) {
             MessageUtils.showError("Save error", e.getMessage());

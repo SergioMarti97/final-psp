@@ -159,12 +159,19 @@ public class FileUtils {
      * "./cabins/" + situation + ".txt"
      * @param situation the situation of the cabin
      * @param students the students
+     * @param maxStudents the maximum number of students to save
      */
-    public static void saveCabin(String situation, List<PendingApp> students) throws IOException {
+    public static void saveCabin(String situation, List<PendingApp> students, int maxStudents) throws IOException {
         String fileName = System.getProperty("user.dir") + File.separator + "cabin" + File.separator + situation + ".txt";
         BufferedWriter bw = new BufferedWriter(new FileWriter(fileName, true));
-        for (PendingApp student : students) {
-            bw.write(student.getLine());
+
+        int size = students.size();
+        if (size > maxStudents) {
+            size = maxStudents;
+        }
+
+        for (int i = 0; i < size; i++) {
+            bw.write(students.get(i).getLine());
             bw.newLine();
         }
         bw.close();
