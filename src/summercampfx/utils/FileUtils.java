@@ -4,10 +4,12 @@ import summercampfx.model.Course;
 import summercampfx.model.PendingApp;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
 import java.time.LocalDate;
-import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  * This class is needed for save and write the information
@@ -35,16 +37,18 @@ public class FileUtils {
                 String[] info = line.split(";");
                 String[] date = info[2].split("/");
 
-                pendingApps.add(
-                        new PendingApp(
-                                info[0],
-                                info[1],
-                                LocalDate.of(Integer.parseInt(date[2]), Integer.parseInt(date[1]), Integer.parseInt(date[0])),
-                                info[3],
-                                Month.of(Integer.parseInt(info[4])),
-                                Integer.parseInt(info[5])
-                                )
-                );
+                if (info.length == 6) {
+                    pendingApps.add(
+                            new PendingApp(
+                                    info[0],
+                                    info[1],
+                                    LocalDate.of(Integer.parseInt(date[2]), Integer.parseInt(date[1]), Integer.parseInt(date[0])),
+                                    info[3],
+                                    Month.values()[Integer.parseInt(info[4])-1],
+                                    Integer.parseInt(info[5])
+                            )
+                    );
+                }
 
                 line = br.readLine();
 
@@ -73,13 +77,15 @@ public class FileUtils {
 
                 String[] info = line.split(";");
 
-                courses.add(
-                        new Course(
-                                info[0],
-                                Integer.parseInt(info[1]),
-                                Integer.parseInt(info[2])
-                        )
-                );
+                if (info.length == 3) {
+                    courses.add(
+                            new Course(
+                                    info[0],
+                                    Integer.parseInt(info[1]),
+                                    Integer.parseInt(info[2])
+                            )
+                    );
+                }
 
                 line = br.readLine();
 
@@ -109,26 +115,24 @@ public class FileUtils {
      * This method saves a new application created in our program
      * @param line the information of the new application
      */
-    public static void saveApp(String line) {
-        try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter(System.getProperty("user.dir") + File.separator + "pendingApps.txt"));
-            bw.write(line);
-        } catch ( IOException e ) {
-            e.printStackTrace();
-        }
+    public static void saveApp(String line) throws IOException {
+        String fileName = System.getProperty("user.dir") + File.separator + "pendingApps.txt";
+        BufferedWriter bw = new BufferedWriter(new FileWriter(fileName, true));
+        bw.newLine();
+        bw.write(line);
+        bw.close();
     }
 
     /**
      * This method saves a new course created
      * @param line the information of the new application
      */
-    public static void saveCourse(String line) {
-        try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter(System.getProperty("user.dir") + File.separator + "courses.txt"));
-            bw.write(line);
-        } catch ( IOException e ) {
-            e.printStackTrace();
-        }
+    public static void saveCourse(String line) throws IOException {
+        String fileName = System.getProperty("user.dir") + File.separator + "courses.txt";
+        BufferedWriter bw = new BufferedWriter(new FileWriter(fileName, true));
+        bw.newLine();
+        bw.write(line);
+        bw.close();
     }
 
     /**
