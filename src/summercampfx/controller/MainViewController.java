@@ -6,15 +6,17 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import summercampfx.model.Course;
 import summercampfx.model.PendingApp;
 import summercampfx.utils.FileUtils;
+import summercampfx.utils.MessageUtils;
+
+import java.io.IOException;
+import java.util.List;
 
 public class MainViewController {
 
@@ -31,6 +33,9 @@ public class MainViewController {
     public TableColumn<PendingApp, String> birthDateCol;
 
     @FXML
+    public TableView<PendingApp> cabinTableView;
+
+    @FXML
     public TableColumn<PendingApp, String> nameCol2;
 
     @FXML
@@ -41,6 +46,12 @@ public class MainViewController {
 
     @FXML
     public ComboBox<Integer> comboAge;
+
+    @FXML
+    private ListView<String> listCabins;
+
+    @FXML
+    private TextField cabinTextField;
 
     private Stage mainStage;
 
@@ -68,17 +79,55 @@ public class MainViewController {
 
     private void setColumnsSecondTable() {
         nameCol2.setCellValueFactory(new PropertyValueFactory<>("name"));
-        nameCol2.setCellValueFactory(new PropertyValueFactory<>("surnames"));
+        surnamesCol2.setCellValueFactory(new PropertyValueFactory<>("surnames"));
     }
 
-    @FXML
-    public void initialize() {
-        // studentsTableView;
-        setColumnsFirstTable();
-        setColumnsSecondTable();
-        setComboAge(6, 16);
-        setCourses();
-        studentsTableView.setItems(FXCollections.observableArrayList(FileUtils.loadApps()));
+    public void handleFillCabin() {
+        PendingApp pendingApp = studentsTableView.getSelectionModel().getSelectedItem();
+        Course course = comboCourses.getValue();
+        Integer age = comboAge.getValue();
+
+        if (pendingApp == null) {
+            MessageUtils.showError("Student selection", "You must select a student");
+            return;
+        } else if (course == null) {
+            MessageUtils.showError("Course selection", "You must select a course");
+            return;
+        } else if (age == null) {
+            MessageUtils.showError("Age selection", "You must select an age");
+            return;
+        }
+
+        studentsTableView.getItems().remove(pendingApp);
+        cabinTableView.getItems().add(pendingApp);
+    }
+
+    public void handleSaveCabin() {
+        String cabin = cabinTextField.getText();
+        List<PendingApp> students = cabinTableView.getItems();
+
+        if (cabin == null || cabin.isEmpty()) {
+            MessageUtils.showError("Cabin field", "The cabin field is empty");
+            return;
+        } else if (students == null || students.isEmpty()) {
+            MessageUtils.showError("Students selections", "The students selection is empty");
+            return;
+        }
+
+        try {
+            FileUtils.saveCabin(cabin, students, 10);
+            listCabins.getItems().clear();
+            listCabins.getItems().addAll(FileUtils.loadCabinsFileNames());
+
+            if (students.size() > 10) {
+                MessageUtils.showMessage("Cabin Save", "The cabin has been saved successfully the first 10 students");
+                return;
+            }
+
+            MessageUtils.showMessage("Cabin Save", "The cabin has been saved successfully");
+        } catch (IOException e) {
+            MessageUtils.showError("Save error", e.getMessage());
+        }
     }
 
     public void handleNewCourse() throws Exception {
@@ -124,4 +173,16 @@ public class MainViewController {
     public void setMainStage(Stage mainStage) {
         this.mainStage = mainStage;
     }
+
+    @FXML
+    public void initialize() {
+        // studentsTableView;
+        setColumnsFirstTable();
+        setColumnsSecondTable();
+        setComboAge(6, 16);
+        setCourses();
+        studentsTableView.setItems(FXCollections.observableArrayList(FileUtils.loadApps()));
+        listCabins.getItems().addAll(FileUtils.loadCabinsFileNames());
+    }
+
 }
