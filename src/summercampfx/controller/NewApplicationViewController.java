@@ -89,7 +89,7 @@ public class NewApplicationViewController {
     }
 
     private void setDatePickerBirthdayFormat() {
-        datePickerBirthday.setConverter(new StringConverter<>() {
+        datePickerBirthday.setConverter(new StringConverter<LocalDate>() {
             private final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
             @Override

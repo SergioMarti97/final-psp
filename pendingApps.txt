@@ -1,3 +1,4 @@
 Marcos;Rubio Rico;20/08/2004;Math;8;4
 Marcos;Rubio Rico;13/08/2004;Math;8;4
 Rodrigo;Rodríguez Ramírez;18/04/2007;Theater;8;2
+Sergio;Martí Torregrosa;05/05/2021;4;7;3
